@@ -45,7 +45,7 @@ vub(N*mx+M*mu)  = 0;                    % We want the last input to be zero
 
 % Generate the matrix Q and the vector c (objecitve function weights in the QP problem) 
 %Q1 = zeros(mx,mx);
-Q1 = diag([0.1 0.1 0.1 0.1]);
+Q1 = diag([1 1 1 1]);
 %Q1(1,1) = ;                             % Weight on state x1
 %Q1(2,2) = ;                            % Weight on state x2
 %Q1(3,3) = ;                             % Weight on state x3
@@ -93,6 +93,7 @@ x3  = [zero_padding; x3; zero_padding];
 x4  = [zero_padding; x4; zero_padding];
 
 %% Plotting
+%{
 t = 0:delta_t:delta_t*(length(u)-1);
 
 figure(2)
@@ -113,8 +114,33 @@ plot(t,x4,'m',t,x4','mo'),grid
 xlabel('tid (s)'),ylabel('pdot')
 
 %print -depsc Task_2.3_q_00.1
+%}
+
+
+%% ======================================================================================
+%%=================================== TASK 3 BEGIN ======================================
+%%=======================================================================================
+%% QR controller
+
+lambdaCost = 350;
+rCost = 1;
+pCost = 1;
+p_dotCost = 1;
+input_pitchCost = 50;
+
+Q_lq = diag([lambdaCost, rCost, pCost, p_dotCost]);
+R_lq = diag(input_pitchCost);
+
+K_lq = dlqr(A1, B1, Q_lq, R_lq);
 
 
 %% Create accepable input to simulink
 uTime = linspace(0, size(u,1)*0.25 - 0.25, size(u,1));
 uInput = [uTime' u];
+
+xTime = linspace(0, size(x1,1)*0.25 - 0.25, size(x1,1));
+xInput = [xTime', x1, x2, x3, x4];
+
+
+
+
