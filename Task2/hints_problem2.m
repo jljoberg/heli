@@ -45,7 +45,7 @@ vub(N*mx+M*mu)  = 0;                    % We want the last input to be zero
 
 % Generate the matrix Q and the vector c (objecitve function weights in the QP problem) 
 %Q1 = zeros(mx,mx);
-Q1 = diag([0.1 0.1 0.1 0.1]);
+Q1 = diag([1 1 1 1]);
 %Q1(1,1) = ;                             % Weight on state x1
 %Q1(2,2) = ;                            % Weight on state x2
 %Q1(3,3) = ;                             % Weight on state x3
@@ -112,4 +112,4 @@ subplot(515)
 plot(t,x4,'m',t,x4','mo'),grid
 xlabel('tid (s)'),ylabel('pdot')
 
-print -depsc Task_2.3_q_00.1
+%print -depsc Task_2.3_q_00.1
