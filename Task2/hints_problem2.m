@@ -61,7 +61,7 @@ beq(1:mx) = A1*x0; % Initial value
 
 %% Solve QP problem with linear model
 tic
-H_diag = [repmat([1 0 0 0]', N,1); repmat(Q(1,1)', N,1)];
+H_diag = [repmat([1 0 0 0]', N,1); repmat(Q(1,1)', M,1)];
 H = diag(H_diag);
 [z,lambda] = quadprog(H, [], [], [], Aeq, beq, vlb, vub); % hint: quadprog
 t1=toc;
