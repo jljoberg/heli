@@ -148,25 +148,29 @@ xlabel('tid (s)'),ylabel('pdot')
 %%=======================================================================================
 %% QR controller
 
-lambdaCost = 350;
+lambdaCost = 200;
 rCost = 1;
 pCost = 1;
 p_dotCost = 1;
+eCost = 800;
+e_dotCost = 100;
 input_pitchCost = 50;
+input_eCost = 1;
 
-Q_lq = diag([lambdaCost, rCost, pCost, p_dotCost 0 0]);
-R_lq = diag([input_pitchCost 0.001]);
+Q_lq = diag([lambdaCost, rCost, pCost, p_dotCost, eCost, e_dotCost]);
+R_lq = diag([input_pitchCost, input_eCost]);
 
-K_lq_temp = dlqr(A1, B1, Q_lq, R_lq);
-K_lq = K_lq_temp(1,1:4);
+K_lq = dlqr(A1, B1, Q_lq, R_lq);
 
+ 
 %% Create accepable input to simulink
 uTime = linspace(0, size(u1,1)*0.25 - 0.25, size(u1,1));
 u1Input = [uTime' u1];
 u2Input = [uTime' u2];
+u1u2Input = [uTime' u1 u2];
 
 xTime = linspace(0, size(x1,1)*0.25 - 0.25, size(x1,1));
-xInput = [xTime', x1, x2, x3, x4];
+xInput = [xTime', x1, x2, x3, x4, x5, x6];
 
 
 
