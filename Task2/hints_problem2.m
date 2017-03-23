@@ -118,3 +118,6 @@ xlabel('tid (s)'),ylabel('pdot')
 %% Create accepable input to simulink
 uTime = linspace(0, size(u,1)*0.25 - 0.25, size(u,1));
 uInput = [uTime' u];
+
+x1Time = linspace(0,size(x1,1)*0.25-0.25, size(x1,1));
+

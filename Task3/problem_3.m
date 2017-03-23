@@ -51,8 +51,11 @@ Q1 = diag([1 1 1 1]);
 %Q1(3,3) = ;                             % Weight on state x3
 %Q1(4,4) = ;                            % Weight on state x4
 P1 = 0;                                 % Weight on input
+tic
 Q = 2*genq2(Q1,P1,N,M,mu);              % Generate Q
+t12345 = toc
 c = zeros(N*mx+M*mu,1);                 % Generate c
+
 
 %% Generate system matrixes for linear model
 Aeq = gena2(A1,B1,N,mx,mu);           % Generate A, hint: gena2
@@ -60,11 +63,13 @@ beq = zeros(N*mx,1);        	  % Generate b
 beq(1:mx) = A1*x0; % Initial value
 
 %% Solve QP problem with linear model
+
 tic
 H_diag = [repmat([1 0 0 0]', N,1); repmat(Q(1,1)', M,1)];
 H = diag(H_diag);
 [z,lambda] = quadprog(H, [], [], [], Aeq, beq, vlb, vub); % hint: quadprog
-t1=toc;
+t1=toc
+
 
 % Calculate objective value
 phi1 = 0.0;
@@ -140,7 +145,5 @@ uInput = [uTime' u];
 
 xTime = linspace(0, size(x1,1)*0.25 - 0.25, size(x1,1));
 xInput = [xTime', x1, x2, x3, x4];
-
-
 
 
